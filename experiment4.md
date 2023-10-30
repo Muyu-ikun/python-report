@@ -408,7 +408,7 @@ $    ···–··–
 显示效果如下：
 
 ```mermaid
-flowchart LR
+flowchart TD
     A[Start] --> B{仓库是否存在所需商品}
     B -->|Yes|C{判断需求量是否小于库存}
     B -->|NO|D[return False]
