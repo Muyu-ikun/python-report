@@ -1,14 +1,14 @@
 # 实验六 Python函数
 
-班级： 21计科1
+班级： 21计科02班
 
-学号： 202302200000
+学号： B20230302210
 
-姓名： 张三
+姓名： 陶鑫
 
-Github地址：<https://github.com/yourusername/python_course>
+Github地址：<https://github.com/Muyu-ikun>
 
-CodeWars地址：<https://www.codewars.com/users/yourusername>
+CodeWars地址：<https://www.codewars.com/users/Muyu-ikun>
 
 ---
 
@@ -71,6 +71,20 @@ lst1 = [
 
 [代码提交地址](https://www.codewars.com/kata/coding-meetup-number-1-higher-order-functions-series-count-the-number-of-javascript-developers-coming-from-europe)
 
+```python
+def count_developers(lst):
+    count = 0  
+
+    for developer in lst:
+        if developer['continent'] == 'Europe' and developer['language'] == 'JavaScript':
+            count += 1
+
+    return count
+
+    pass
+
+```
+
 ---
 
 #### 第二题： 使用函数进行计算
@@ -103,6 +117,51 @@ eight(divided_by(three()))
 代码提交地址：
 <https://www.codewars.com/kata/525f3eda17c7cd9f9e000b39>
 
+```python
+def zero(func=None):
+    return 0 if func is None else func(0)
+
+def one(func=None):
+    return 1 if func is None else func(1)
+
+def two(func=None):
+    return 2 if func is None else func(2)
+
+def three(func=None):
+    return 3 if func is None else func(3)
+
+def four(func=None):
+    return 4 if func is None else func(4)
+
+def five(func=None):
+    return 5 if func is None else func(5)
+
+def six(func=None):
+    return 6 if func is None else func(6)
+
+def seven(func=None):
+    return 7 if func is None else func(7)
+
+def eight(func=None):
+    return 8 if func is None else func(8)
+
+def nine(func=None):
+    return 9 if func is None else func(9)
+
+def plus(y):
+    return lambda x: x + y
+
+def minus(y):
+    return lambda x: x - y
+
+def times(y):
+    return lambda x: x * y
+
+def divided_by(y):
+    return lambda x: x // y
+
+```
+
 ---
 
 #### 第三题： 缩短数值的过滤器(Number Shortening Filter)
@@ -126,6 +185,27 @@ filter2('pippi') == 'pippi'
 
 代码提交地址：
 <https://www.codewars.com/kata/56b4af8ac6167012ec00006f>
+
+```python
+def shorten_number(suffixes, base):
+    def shorten(value):
+        try:
+            value = int(value)
+            if value < base:
+                return str(value) + suffixes[0]
+            for i in range(len(suffixes) - 1):
+                suffix = suffixes[i + 1]
+                divisor = base ** (i + 1)
+                if value < base * base:
+                    return str(int(value // base)) + suffix
+                value //= base
+            return f"{value:.0f}" + suffixes[-1]  # 处理最后一个单位
+        except (ValueError, TypeError):
+            return str(value)
+    return shorten
+
+
+```
 
 ---
 
@@ -162,6 +242,16 @@ list1 = [
 
 代码提交地址：
 <https://www.codewars.com/kata/582887f7d04efdaae3000090>
+
+```python
+def find_senior(lst): 
+    max_age = max(lst, key=lambda x: x['age'])  # 找到最年长的开发人员
+    
+    senior_developers = [developer for developer in lst if developer['age'] == max_age['age']]
+    
+    return senior_developers
+
+```
 
 ---
 
@@ -291,11 +381,6 @@ curryPartial(curryPartial(curryPartial(add, 1)), 2, 3) # =>6
 
 使用Mermaid绘制程序流程图
 
-安装VSCode插件：
-
-- Markdown Preview Mermaid Support
-- Mermaid Markdown Syntax Highlighting
-
 使用Markdown语法绘制你的程序绘制程序流程图（至少一个），Markdown代码如下：
 
 ![程序流程图](/Experiments/img/2023-08-05-22-00-00.png)
@@ -303,62 +388,125 @@ curryPartial(curryPartial(curryPartial(add, 1)), 2, 3) # =>6
 显示效果如下：
 
 ```mermaid
-flowchart LR
-    A[Start] --> B{Is it?}
-    B -->|Yes| C[OK]
-    C --> D[Rethink]
-    D --> B
-    B ---->|No| E[End]
+graph TD
+  A(开始) --> B(找到最年长的开发人员)
+  B --> C(生成新列表)
+  C --> D(保持原始顺序)
+  D --> E(输出包含最年长开发人员的列表)
+
 ```
-
-查看Mermaid流程图语法-->[点击这里](https://mermaid.js.org/syntax/flowchart.html)
-
-使用Markdown编辑器（例如VScode）编写本次实验的实验报告，包括[实验过程与结果](#实验过程与结果)、[实验考查](#实验考查)和[实验总结](#实验总结)，并将其导出为 **PDF格式** 来提交。
-
-## 实验过程与结果
-
-请将实验过程与结果放在这里，包括：
-
-- [第一部分 Python函数](#第一部分)
-- [第二部分 Codewars Kata挑战](#第二部分)
-- [第三部分 使用Mermaid绘制程序流程图](#第三部分)
-
-注意代码需要使用markdown的代码块格式化，例如Git命令行语句应该使用下面的格式：
-
-![Git命令](/Experiments/img/2023-07-26-22-48.png)
-
-显示效果如下：
-
-```bash
-git init
-git add .
-git status
-git commit -m "first commit"
-```
-
-如果是Python代码，应该使用下面代码块格式，例如：
-
-![Python代码](/Experiments/img/2023-07-26-22-52-20.png)
-
-显示效果如下：
-
-```python
-def add_binary(a,b):
-    return bin(a+b)[2:]
-```
-
-代码运行结果的文本可以直接粘贴在这里。
-
-**注意：不要使用截图，Markdown文档转换为Pdf格式后，截图可能会无法显示。**
 
 ## 实验考查
 
 请使用自己的语言并使用尽量简短代码示例回答下面的问题，这些问题将在实验检查时用于提问和答辩以及实际的操作。
 
 1. 什么是函数式编程范式？
+
+函数式编程范式（Functional Programming Paradigm）是一种编程范式，它强调在编程中将计算视为数学函数的应用，避免更改状态和可变数据。函数式编程的核心思想包括以下关键概念：
+
+ **纯函数（Pure Functions）**：纯函数是一种没有副作用的函数，其输出仅依赖于输入。这意味着相同的输入将始终产生相同的输出，而不会影响程序的状态或全局变量。这种特性使得代码更加可预测和可维护。
+
+ **不可变性（Immutability）**：不可变性是指数据一旦创建就不能被修改的概念。在函数式编程中，数据通常被视为不可变的，而在需要更改数据时，会创建新的数据对象而不是修改现有对象。
+
+ **高阶函数（Higher-Order Functions）**：高阶函数是可以接受其他函数作为参数或将函数作为返回值的函数。这使得函数可以灵活组合和重用，例如，可以使用高阶函数来实现映射、过滤、折叠等操作。
+
+ **递归（Recursion）**：函数式编程鼓励使用递归而不是循环来解决问题。递归是一种自我调用的技术，用于解决问题，特别适用于处理树形结构和列表等数据结构。
+
+ **不可改变的数据结构（Immutable Data Structures）**：函数式编程通常使用不可改变的数据结构，例如不可变列表、不可变映射，以避免副作用和提高性能。
+
+ **Lambda表达式（Lambda Expressions）**：Lambda表达式是匿名函数，允许在需要函数的地方定义函数，通常用于传递给高阶函数。
+
+ **惰性求值（Laziness）**：函数式编程支持惰性求值，这意味着只有在需要时才计算结果。这可以提高性能，尤其是处理无限序列时。
+
+ **无状态（Statelessness）**：函数式编程尽量避免共享可变状态，从而减少并发编程中的竞态条件和错误。
+
+
 2. 什么是lambda函数？请举例说明。
-3. 什么是高阶函数？常用的高阶函数有哪些？这些高阶函数如何工作？使用简单的代码示例说明。
+
+Lambda函数，也被称为匿名函数，是一种在编程中用于创建小型、无需命名的函数的方式。Lambda函数通常用于函数式编程范式，特别是在需要传递函数作为参数的上下文中非常有用。Lambda函数在编写简单的函数或临时的函数时很方便，无需显式定义函数名称。
+
+Lambda函数的一般语法如下：
+
+```python
+lambda arguments: expression
+```
+
+- `arguments`：是Lambda函数的参数列表，可以包含零个或多个参数。
+- `expression`：是Lambda函数的表达式，用于计算结果。
+
+以下是一个Lambda函数的简单示例：
+
+```python
+# Lambda函数用于求平方
+square = lambda x: x * x
+
+# 使用Lambda函数
+result = square(5)
+print(result)  # 输出 25
+```
+
+在这个示例中，Lambda函数接受一个参数 `x`，并返回 `x` 的平方。Lambda函数通常与高阶函数一起使用，例如`map`、`filter`、`sorted`等。以下是Lambda函数在`map`函数中的示例：
+
+```python
+numbers = [1, 2, 3, 4, 5]
+# 使用Lambda函数计算每个数的平方
+squared_numbers = list(map(lambda x: x * x, numbers))
+print(squared_numbers)  # 输出 [1, 4, 9, 16, 25]
+```
+
+在这个示例中，Lambda函数用于`map`函数，以计算列表中每个元素的平方。Lambda函数的使用可以使代码更简洁，并允许将函数作为参数传递，用于不同的操作。Lambda函数通常用于短暂的、一次性的函数需求。
+
+3.  什么是高阶函数？常用的高阶函数有哪些？这些高阶函数如何工作？使用简单的代码示例说明。
+
+高阶函数是指可以接受其他函数作为参数，或者将函数作为返回值的函数。在函数式编程中，高阶函数是一种强大的工具，它使得函数可以作为一等公民，可以用来抽象通用的操作，提高代码的模块性和可重用性。
+
+以下是一些常用的高阶函数以及它们的简要说明：
+
+1. `map`：`map`函数接受一个函数和一个可迭代对象，它将函数应用于可迭代对象的每个元素，并返回一个包含结果的新可迭代对象。
+
+```python
+numbers = [1, 2, 3, 4, 5]
+squared_numbers = list(map(lambda x: x * x, numbers))
+# 输出：[1, 4, 9, 16, 25]
+```
+
+2. `filter`：`filter`函数接受一个函数和一个可迭代对象，它将函数应用于可迭代对象的每个元素，并返回一个包含满足条件的元素的新可迭代对象。
+
+```python
+numbers = [1, 2, 3, 4, 5]
+even_numbers = list(filter(lambda x: x % 2 == 0, numbers))
+# 输出：[2, 4]
+```
+
+3. `reduce`：`reduce`函数接受一个函数和一个可迭代对象，它对可迭代对象中的元素进行累积操作，将结果返回。
+
+```python
+from functools import reduce
+numbers = [1, 2, 3, 4, 5]
+sum = reduce(lambda x, y: x + y, numbers)
+# 输出：15
+```
+
+4. `sorted`：`sorted`函数接受一个可迭代对象和一个可选的排序函数，它返回一个排序后的新列表。
+
+```python
+numbers = [5, 2, 1, 4, 3]
+sorted_numbers = sorted(numbers)
+# 输出：[1, 2, 3, 4, 5]
+```
+
+5. `any` 和 `all`：`any`函数接受一个可迭代对象，如果可迭代对象中的任何元素满足条件，则返回`True`，否则返回`False`。`all`函数类似，但要求可迭代对象中的所有元素满足条件。
+
+```python
+numbers = [1, 2, 3, 4, 5]
+result_any = any(x > 4 for x in numbers)
+# 输出：True
+result_all = all(x > 4 for x in numbers)
+# 输出：False
+```
 
 ## 实验总结
 
 总结一下这次实验你学习和使用到的知识，例如：编程工具的使用、数据结构、程序语言的语法、算法、编程技巧、编程思想。
+
+这次实验中我学会了一些python中的高级函数的使用方法，这有助于我更好的去完成题目的需求。

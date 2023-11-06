@@ -1,14 +1,14 @@
 # 实验七 Python面向对象编程
 
-班级： 21计科1
+班级： 21计科02班
 
-学号： 202302200000
+学号： B20230302210
 
-姓名： 张三
+姓名： 陶鑫
 
-Github地址：<https://github.com/yourusername/python_course>
+Github地址：<https://github.com/Muyu-ikun>
 
-CodeWars地址：<https://www.codewars.com/users/yourusername>
+CodeWars地址：<https://www.codewars.com/users/Muyu-ikun>
 
 ---
 
@@ -87,6 +87,21 @@ False
 代码提交地址：
 <https://www.codewars.com/kata/54fe05c4762e2e3047000add>
 
+```python
+class Ship:
+    def __init__(self, draft, crew):
+        self.draft = draft
+        self.crew = crew
+    
+    def is_worth_it(self):
+        # 计算除去船员重量后的吃水深度
+        effective_draft = self.draft - (self.crew * 1.5)
+        
+        # 判断船是否值得掠夺
+        return effective_draft > 20
+
+```
+
 ---
 
 #### 第二题： 搭建积木
@@ -120,6 +135,29 @@ b.get_surface_area() # return 88
 代码提交地址：
 <https://www.codewars.com/kata/55b75fcf67e558d3750000a3>
 
+```python
+
+class Block:
+    def __init__(self, dimensions):
+        self.width, self.length, self.height = dimensions
+
+    def get_width(self):
+        return self.width
+
+    def get_length(self):
+        return self.length
+
+    def get_height(self):
+        return self.height
+
+    def get_volume(self):
+        return self.width * self.length * self.height
+
+    def get_surface_area(self):
+        return 2 * (self.width * self.length + self.length * self.height + self.height * self.width)
+
+```
+
 ---
 
 #### 第三题： 分页助手
@@ -149,6 +187,39 @@ helper.page_index(-10) # should == -1 because negative indexes are invalid
 代码提交地址：
 <https://www.codewars.com/kata/515bb423de843ea99400000a>
 
+```python
+class PaginationHelper:
+    def __init__(self, collection, items_per_page):
+        self.collection = collection
+        self.items_per_page = items_per_page
+
+    def item_count(self):
+        return len(self.collection)
+
+    def page_count(self):
+        return (len(self.collection) + self.items_per_page - 1) // self.items_per_page
+
+    def page_item_count(self, page_index):
+        if page_index < 0 or page_index >= self.page_count():
+            return -1
+        elif page_index == self.page_count() - 1: 
+            
+            # 如果是6%4，那么最后一页就是2
+            # 如果是8%4，那么最后一页就是0，说明最后一页是满的，应该返回4
+            last_page = self.item_count() % self.items_per_page
+            
+            return self.items_per_page if last_page == 0 else last_page
+        
+        # 其他页
+        else:
+            return self.items_per_page
+    def page_index(self, item_index):
+        if item_index < 0 or item_index >= len(self.collection):
+            return -1
+        return item_index // self.items_per_page
+
+
+```
 
 ---
 
@@ -182,6 +253,42 @@ a.add(c)      # raises an exception
 
 代码提交地址：
 <https://www.codewars.com/kata/526dad7f8c0eb5c4640000a4>
+
+```python
+import math
+
+class Vector:
+    def __init__(self, components):
+        self.components = components
+
+    def __str__(self):
+        return f"({','.join(map(str, self.components))})"
+
+    def equals(self, other):
+        return self.components == other.components
+
+    def add(self, other):
+        if len(self.components) != len(other.components):
+            raise ValueError("Vector dimensions must match for addition")
+        result = [x + y for x, y in zip(self.components, other.components)]
+        return Vector(result)
+
+    def subtract(self, other):
+        if len(self.components) != len(other.components):
+            raise ValueError("Vector dimensions must match for subtraction")
+        result = [x - y for x, y in zip(self.components, other.components)]
+        return Vector(result)
+
+    def dot(self, other):
+        if len(self.components) != len(other.components):
+            raise ValueError("Vector dimensions must match for dot product")
+        result = sum(x * y for x, y in zip(self.components, other.components))
+        return result
+
+    def norm(self):
+        return math.sqrt(sum(x ** 2 for x in self.components))
+
+```
 
 ---
 
@@ -240,87 +347,94 @@ user.rank # => -7 # rank was upgraded to -7
 
 使用Markdown语法绘制你的程序绘制程序类图（至少一个），Markdown代码如下：
 
-![程序类图](/Experiments/img/2023-08-08-22-47-53.png)
-
 显示效果如下：
 
 ```mermaid
----
-title: Animal example
----
 classDiagram
-    note "From Duck till Zebra"
-    Animal <|-- Duck
-    note for Duck "can fly\ncan swim\ncan dive\ncan help in debugging"
-    Animal <|-- Fish
-    Animal <|-- Zebra
-    Animal : +int age
-    Animal : +String gender
-    Animal: +isMammal()
-    Animal: +mate()
-    class Duck{
-        +String beakColor
-        +swim()
-        +quack()
+    class Ship {
+        + draft: float
+        + crew: int
+        --
+        + __init__(draft: float, crew: int)
+        + is_worth_it(): bool
     }
-    class Fish{
-        -int sizeInFeet
-        -canEat()
-    }
-    class Zebra{
-        +bool is_wild
-        +run()
-    }
+
 ```
 
 查看Mermaid类图的语法-->[点击这里](https://mermaid.js.org/syntax/classDiagram.html)
-
-使用Markdown编辑器（例如VScode）编写本次实验的实验报告，包括[实验过程与结果](#实验过程与结果)、[实验考查](#实验考查)和[实验总结](#实验总结)，并将其导出为 **PDF格式** 来提交。
-
-## 实验过程与结果
-
-请将实验过程与结果放在这里，包括：
-
-- [第一部分 Python面向对象编程](#第一部分)
-- [第二部分 Codewars Kata挑战](#第二部分)
-- [第三部分 使用Mermaid绘制程序流程图](#第三部分)
-
-注意代码需要使用markdown的代码块格式化，例如Git命令行语句应该使用下面的格式：
-
-![Git命令](/Experiments/img/2023-07-26-22-48.png)
-
-显示效果如下：
-
-```bash
-git init
-git add .
-git status
-git commit -m "first commit"
-```
-
-如果是Python代码，应该使用下面代码块格式，例如：
-
-![Python代码](/Experiments/img/2023-07-26-22-52-20.png)
-
-显示效果如下：
-
-```python
-def add_binary(a,b):
-    return bin(a+b)[2:]
-```
-
-代码运行结果的文本可以直接粘贴在这里。
-
-**注意：不要使用截图，Markdown文档转换为Pdf格式后，截图可能会无法显示。**
 
 ## 实验考查
 
 请使用自己的语言并使用尽量简短代码示例回答下面的问题，这些问题将在实验检查时用于提问和答辩以及实际的操作。
 
 1. Python的类中__init__方法起什么作用？
+
+初始化对象的属性：__init__ 方法允许您在创建类的实例时设置对象的属性。您可以在__init__方法中定义类的属性，并为这些属性赋予初始值。
+
+执行初始化操作：您可以在__init__方法中执行与对象相关的初始化操作。这些操作可以包括计算、配置、打开文件等。
+
+接受参数：__init__ 方法可以接受参数，这些参数可以在创建对象时传递给构造方法，以便在初始化对象时使用。
+
 2. Python语言中如何继承父类和改写（override）父类的方法。
+
+创建子类：首先，定义一个子类，它继承自父类。子类的定义应包括子类的名称和要继承的父类名称，例如：
+
+定义方法：在子类中定义一个与父类方法名称相同的方法。这将是要改写（override）的方法。方法的定义可以包含子类特定的逻辑。
+
+使用 super()：在子类方法中，如果希望保留父类的功能并扩展它，可以使用 super() 函数来调用父类的方法。这允许子类在执行父类方法的基础上添加额外的功能。
+
 3. Python类有那些特殊的方法？它们的作用是什么？请举三个例子并编写简单的代码说明。
+
+在Python中，类可以定义一些特殊的方法（也称为魔术方法或魔法方法），它们具有特定的名称和功能，用于控制类的行为。以下是一些常见的特殊方法以及它们的作用：
+
+1. `__init__(self, ...)`: 这是类的构造方法，用于初始化对象的属性。它在创建对象时自动调用，并允许您设置对象的初始状态。
+
+```python
+class MyClass:
+    def __init__(self, name):
+        self.name = name
+
+obj = MyClass("Alice")
+print(obj.name)  # 输出 "Alice"
+```
+
+2. `__str__(self)`: 这个方法返回对象的字符串表示形式，通常用于自定义对象的可读性。
+
+```python
+class Person:
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+
+    def __str__(self):
+        return f"Person: {self.name}, {self.age} years old"
+
+person = Person("Alice", 30)
+print(person)  # 输出 "Person: Alice, 30 years old"
+```
+
+3. `__add__(self, other)`: 这个方法允许您定义对象的加法操作。它允许您在自定义类中定义加法操作的行为。
+
+```python
+class Vector:
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+
+    def __add__(self, other):
+        new_x = self.x + other.x
+        new_y = self.y + other.y
+        return Vector(new_x, new_y)
+
+v1 = Vector(1, 2)
+v2 = Vector(3, 4)
+result = v1 + v2
+print(result.x, result.y)  # 输出 "4 6"
+```
 
 ## 实验总结
 
 总结一下这次实验你学习和使用到的知识，例如：编程工具的使用、数据结构、程序语言的语法、算法、编程技巧、编程思想。
+Python类和对象： 我学会了如何创建Python类和实例化对象，以及如何定义类的属性和方法。
+
+构造方法（__init__）： 我了解了构造方法的作用，它用于初始化对象的属性，并在创建对象时自动调用。
